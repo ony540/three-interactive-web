@@ -1,17 +1,13 @@
 import * as THREE from "three";
 // 컨트롤은 따로 임포트
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import GUI from "lil-gui";
 
 window.addEventListener("load", () => {
     init();
 });
 
 function init() {
-    const options = {
-        color: 0x00ffff,
-    };
-
+    // console.log(THREE);
     const renderer = new THREE.WebGL1Renderer({
         antialias: true,
     });
@@ -34,28 +30,28 @@ function init() {
 
     //-----controls mesh가 움직이는게 아니라 카메라의 각도가 달라지는 것
     const controls = new OrbitControls(camera, renderer.domElement);
-    // controls.autoRotate = true;
-    // controls.autoRotateSpeed = 10;
-    // controls.enableZoom = true;
-    // controls.enablePan = true; //카메라 좌우로 움직이기 가능 (우클릭 후) - 기본값이 true
-    // controls.maxDistance = 100;
-    // controls.minDistance = 1; //줌 가능 범위 제어
+    controls.autoRotate = true;
+    controls.autoRotateSpeed = 10;
+    controls.enableZoom = true;
+    controls.enablePan = true; //카메라 좌우로 움직이기 가능 (우클릭 후) - 기본값이 true
+    controls.maxDistance = 100;
+    controls.minDistance = 1; //줌 가능 범위 제어
 
-    // controls.maxPolarAngle = Math.PI / 2;
-    // controls.minPolarAngle = Math.PI / 3; //수직방향으로 카메라를 얼마나 돌릴 수 있는지
-    // controls.maxAzimuthAngle = Math.PI / 2;
-    // controls.minAzimuthAngle = Math.PI / 3; //수평방향으로 카메라를 얼마나 돌릴 수 있는지
+    controls.maxPolarAngle = Math.PI / 2;
+    controls.minPolarAngle = Math.PI / 3; //수직방향으로 카메라를 얼마나 돌릴 수 있는지
+    controls.maxAzimuthAngle = Math.PI / 2;
+    controls.minAzimuthAngle = Math.PI / 3; //수평방향으로 카메라를 얼마나 돌릴 수 있는지
 
-    // controls.enableDamping = true; //드래그 다음 조금 움직이다가 넘어감 관성유지
+    controls.enableDamping = true; //드래그 다음 조금 움직이다가 넘어감 관성유지
     // controls.dampingFactor = 0.01; //관성의 정도 0.05보다 작으면 더 오랫동안 관성유지 (움직임)
 
     //----축위치 확인 객체---
-    // const axesHelper = new THREE.AxesHelper(5);
-    // scene.add(axesHelper);
+    const axesHelper = new THREE.AxesHelper(5);
+    scene.add(axesHelper);
 
     //------cube
     const cubeGeometry = new THREE.IcosahedronGeometry(1); //반지름
-    const cubeMaterial = new THREE.MeshLambertMaterial({ color: new THREE.Color(0x00ffff), emissive: 0x111111 });
+    const cubeMaterial = new THREE.MeshLambertMaterial({ color: new THREE.Color(0xcc99ff), emissive: 0x111111 });
     const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
 
     const skeletonGeometry = new THREE.IcosahedronGeometry(2);
@@ -81,11 +77,11 @@ function init() {
     function render() {
         const elapsedTime = clock.getElapsedTime();
 
-        cube.rotation.x = elapsedTime;
-        cube.rotation.y = elapsedTime;
+        // cube.rotation.x = elapsedTime;
+        // cube.rotation.y = elapsedTime;
 
-        skeleton.rotation.x = elapsedTime * 1.5;
-        skeleton.rotation.y = elapsedTime * 1.5;
+        // skeleton.rotation.x = elapsedTime * 1.5;
+        // skeleton.rotation.y = elapsedTime * 1.5;
 
         // 오르빗컨트롤 업데이트 필요
         controls.update();
@@ -108,16 +104,4 @@ function init() {
     }
 
     window.addEventListener("resize", handleResize);
-
-    const gui = new GUI();
-    // gui.add(cube.position, "y", -3, 3, 0.1); //cube.position의 y축값 조정, 범위 -3~ 3 , 단계 0.1
-    gui.add(cube.position, "y").min(-3).max(3).step(0.1);
-
-    gui.add(cube, "visible");
-
-    // 색상제어의 경우 다른 매서드
-    gui.addColor(options, "color") //options객체안의 color의 값을 바꿀수있는 color패널이 나온다
-        .onChange((value) => {
-            cube.material.color.set(value);
-        }); //onChange 으로 해당 value로 색을 지정한다
 }
