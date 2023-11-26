@@ -1,0 +1,39 @@
+body {
+  margin: 0;
+  padding: 0;
+  /* background-color: lavender; */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* canvas {
+  position: absolute;
+  inset: 0;
+}
+h1 {
+  color: violet;
+} */
+
+.container {
+  position: absolute;
+  bottom: 64px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 16px;
+}
+
+.container button {
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+}
+
+.container button:not(:first-child) {
+  margin-left: 16px;
+}
