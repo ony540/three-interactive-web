@@ -1,0 +1,35 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Avenir, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+
+/* h1에 바로 릴레이티브하면 돔의 width를 못찾음!! 안에 아무것도 없다고 생각해서 */
+.wrapper {
+  position: relative;
+  min-height: 1000vh; 
+  /* 임의로 스크롤 가능하도록 하기 위해 */
+}
+
+header {
+  padding: 120px 24px;
+}
+
+h1 {
+  margin: 0;
+  padding: 0;
+  font-size: 64px;
+  font-weight: bold;
+  text-align: center;
+}
