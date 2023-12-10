@@ -9,14 +9,6 @@ window.addEventListener('load', () => {
 });
 
 async function init() {
-  gsap.registerPlugin(ScrollTrigger); //ScrollTrigger 플러그인 사용하도록 설치
-
-  const params = {
-    waveColor: '#00ffff',
-    backgroundColor: '#ffffff',
-    fogColor: '#f0f0f0',
-  };
-
   const gui = new GUI();
 
   const canvas = document.querySelector('#canvas');
@@ -53,7 +45,7 @@ async function init() {
   const waveGeometry = new THREE.PlaneGeometry(1500, 1500, 150, 150); //뒤2개는 세그먼트
   const waveMaterial = new THREE.MeshStandardMaterial({
     // wireframe: true,
-    color: params.waveColor,
+    color: '#00ffff',
   });
 
   const wave = new THREE.Mesh(waveGeometry, waveMaterial);
@@ -159,76 +151,4 @@ async function init() {
   }
 
   window.addEventListener('resize', handleResize);
-
-  //--------gsap로 스크롤 애니메이션 구현하기---------
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: '.wrapper', //전체화면감싸고 있는 .wrapper 요소가 뷰포트영역에 들어오는 순간 (해당애니메이션을 한다)
-      // start: 'top bottom', // 초기값
-      start: 'top top', 
-      end: 'bottom bottom',
-      scrub: true,
-    },
-  });
-
-  tl.to(params, {
-    waveColor: '#4268ff',
-    onUpdate: () => {
-      waveMaterial.color = new THREE.Color(params.waveColor);
-    }, //색상 파람스에서 #42~로 변경
-    duration: 1.5, //서서히 변화
-  })
-    .to(
-      params,
-      {
-        backgroundColor: '#2a2a2a',
-        onUpdate: () => {
-          scene.background = new THREE.Color(params.backgroundColor);
-        },
-        duration: 1.5,
-      },
-      '<'
-    )
-    .to(
-      params,
-      {
-        fogColor: '#2f2f2f',
-        onUpdate: () => {
-          scene.fog.color = new THREE.Color(params.fogColor);
-        },
-        duration: 1.5,
-      },
-      '<'
-    )
-    .to(camera.position, {
-      x: 100,
-      z: -50,
-      duration: 2.5,
-    })
-    .to(ship.position, {
-      z: 150,
-      duration: 2,
-    })
-    .to(camera.position, {
-      x: -50,
-      y: 25,
-      z: 100,
-      duration: 2,
-    })
-    .to(camera.position, {
-      x: 0,
-      y: 50,
-      z: 300,
-      duration: 2,
-    });
-
-  gsap.to('.title', {
-    opacity: 0,
-    scrollTrigger: {
-      trigger: '.wrapper',
-      scrub: true,
-      pin: true,
-      end: '+=1000',
-    },
-  });
 }
